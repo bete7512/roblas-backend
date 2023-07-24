@@ -1,7 +1,8 @@
-import { DataTypes, Model,Sequelize } from 'sequelize';
+var DataTypes = require('sequelize').DataTypes;
+var Model = require('sequelize').Model;
 
-export default function (sequelize) {
-  class News extends Model {}
+function News(sequelize) {
+  var News = class News extends Model {};
   News.init(
     {
       id: {
@@ -25,16 +26,16 @@ export default function (sequelize) {
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.Sequelize.fn('now')
+        defaultValue: sequelize.fn('now')
       },
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.Sequelize.fn('now')
+        defaultValue: sequelize.fn('now')
       },
     },
     {
-      sequelize,
+      sequelize: sequelize,
       modelName: 'News',
       tableName: 'news',
       timestamps: false,
@@ -50,4 +51,6 @@ export default function (sequelize) {
   );
 
   return News;
-};
+}
+
+module.exports = News;

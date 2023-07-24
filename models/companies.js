@@ -1,7 +1,8 @@
-import { DataTypes, Model,Sequelize } from 'sequelize';
+var DataTypes = require('sequelize').DataTypes;
+var Model = require('sequelize').Model;
 
-export default function(sequelize) {
-  class Company extends Model {}
+function Company(sequelize) {
+  var Company = class Company extends Model {};
   Company.init(
     {
       company_id: {
@@ -21,12 +22,12 @@ export default function(sequelize) {
       phone: {
         type: DataTypes.STRING(14),
         allowNull: false,
-        unique:true
+        unique: true
       },
       email: {
         type: DataTypes.STRING(100),
         allowNull: true,
-        unique: true 
+        unique: true
       },
       logo: {
         type: DataTypes.STRING(200),
@@ -35,16 +36,16 @@ export default function(sequelize) {
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.Sequelize.fn('now')
+        defaultValue: sequelize.fn('now')
       },
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.Sequelize.fn('now')
+        defaultValue: sequelize.fn('now')
       },
     },
     {
-      sequelize,
+      sequelize: sequelize,
       modelName: 'Company',
       tableName: 'companies',
       timestamps: false,
@@ -60,4 +61,6 @@ export default function(sequelize) {
   );
 
   return Company;
-};
+}
+
+module.exports = Company;

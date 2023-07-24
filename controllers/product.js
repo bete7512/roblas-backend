@@ -1,52 +1,51 @@
-import { sequelize } from '../configuration/db'
+const sequelize = require('../configuration/db').sequelize;
+const initModels = require('../models/init-models');
 
-import { initModels } from '../models/init-models'
+const models = initModels(sequelize);
 
-const models = initModels(sequelize)
+const Product = models.products;
 
-const Product = models.products
-
-export const get_all_products = async (req, res) => {
+exports.get_all_products = async function (req, res) {
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll();
     return res.status(201).json({
-      products,
-    })
+      products: products,
+    });
   } catch (error) {
-
     return res.status(401).json({
       mesage: error.message,
-    })
+    });
   }
-}
+};
 
-export const get_product_by_id = async (req, res) => {
+exports.get_product_by_id = async function (req, res) {
   try {
-    const product = await Product.findByPk(req.params.id)
+    const product = await Product.findByPk(req.params.id);
     return res.status(201).json({
-      product,
-    })
+      product: product,
+    });
   } catch (error) {
     return res.status(401).json({
-      message: error.mesage,
-    })
+      message: error.message,
+    });
   }
-}
+};
 
-export const create_new_product = async (req,res) => {
+exports.create_new_product = async function (req, res) {
   try {
-    const product = await Product.create(req.body)
-    console.log(product)
+    const product = await Product.create(req.body);
+    console.log(product);
     return res.status(201).json({
       success: 'product Added Successfully',
-    })
+    });
   } catch (error) {
     return res.status(401).json({
-      message: error.mesage,
-    })
+      message: error.message,
+    });
   }
-}
-export const update_product = async (req, res) => {
+};
+
+exports.update_product = async function (req, res) {
   try {
     const product = await Product.findByPk(req.params.id);
     if (!product) {
@@ -61,8 +60,7 @@ export const update_product = async (req, res) => {
   }
 };
 
-
-export const delete_product = async (req, res) => {
+exports.delete_product = async function (req, res) {
   const id = req.params.id;
   try {
     const product = await Product.findByPk(id);
