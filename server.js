@@ -23,7 +23,7 @@ app.use('/api/', recource_route);
 dbConfig.sequelize
   .sync()
   .then(function() {
-    app.listen(config.server.PORT, function() {
-      console.log('Example app listening at http://localhost:' + config.server.PORT);
+    app.listen(config.server.PORT,()=>{
+      console.log(`Server connected ${config.server.PORT}`);
     });
   });
